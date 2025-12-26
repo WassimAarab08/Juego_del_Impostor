@@ -2,7 +2,7 @@ import random
 
 lista_jugadores = []
 nombre_impostor=""
-jugadores_respuestas = {}
+diccionario_respuestas = {}
 diccionario_palabras = {
     "Playa": "Bañador",
     "Leon": "Tigre",
@@ -50,7 +50,7 @@ def solicitar_datos():
                 break
 
         lista_jugadores.append(nombre_jugador)
-        jugadores_respuestas[nombre_jugador] = []
+        diccionario_respuestas[nombre_jugador] = []
         diccionario_votos[nombre_jugador] = 0
 
 
@@ -80,6 +80,14 @@ def mostrar_palabra():
             print("\n" * 22)
 
 
+# Función encargada de gestionar las rondas
+
+def generador_rondas():
+    for i in range(numero_rondas):
+        print(f"============= Ronda {i+1} =============")
+        for jugador in lista_jugadores:
+            respuesta= validar_datos("FN_generador_ronda",jugador)
+            diccionario_respuestas[jugador].append(respuesta)
 
 
 
@@ -103,7 +111,7 @@ def mostrar_palabra():
 
 
 # Funcion que es llamada por diferentes funciones para comprobar algún tipo de entrada
-def validar_datos(tipo_a_validar):
+def validar_datos(tipo_a_validar,jugador="None"):
     match tipo_a_validar:
 
         case "FN_solicitar_datos":
@@ -114,6 +122,12 @@ def validar_datos(tipo_a_validar):
                 except ValueError:
                     print("Entrada no válida, ya que no es un número.")
             return numero_participantes
+        case "FN_generador_ronda":
+                jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda => ")
+                while len(jugador_respuesta)<2:
+                    jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda debe ser almenos de 2 letras => ")
+
+                return jugador_respuesta
 
         case _:
             return None
