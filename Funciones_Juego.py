@@ -1,7 +1,7 @@
 import random
 
 lista_jugadores = []
-nombre_impostor=""
+nombre_impostor = ""
 diccionario_respuestas = {}
 diccionario_palabras = {
     "Playa": "Bañador",
@@ -35,7 +35,7 @@ numero_rondas = 3
 diccionario_votos = {}
 
 
-# Funcion encargada de solicitar el numero de participantes y sus nombres. Cuenta con validacion de entradas
+# Función encargada de solicitar el número de participantes y sus nombres
 def solicitar_datos():
     print("====================== BIENVENIDO AL JUEGO DEL IMPOSTOR ====================== \n")
     numero_participantes = validar_datos("FN_solicitar_datos")
@@ -52,46 +52,44 @@ def solicitar_datos():
         lista_jugadores.append(nombre_jugador)
         diccionario_respuestas[nombre_jugador] = []
         diccionario_votos[nombre_jugador] = 0
-    print( "\n"*100)
 
-# Función encargada de selecionar el impostor aleatoriamente y la palabra secreta
+    print("\n" * 100)
 
+
+# Función encargada de seleccionar el impostor aleatoriamente y la palabra secreta
 def seleccion_random():
     global nombre_impostor, palabra_secreta
     nombre_impostor = random.choice(lista_jugadores)
     lista_palabras_secretas = list(diccionario_palabras.keys())
-    palabra_secreta= random.choice(lista_palabras_secretas)
+    palabra_secreta = random.choice(lista_palabras_secretas)
 
 
 # Función encargada de mostrar la palabra a cada participante
-
 def mostrar_palabra():
-
+    print("==================== HORA DE VER LA PALABRA Y EL ROL DE CADA UNO ====================")
     for jugador in lista_jugadores:
 
-        input(f"Turno de {jugador} pulse cualquiere tecla para ver la palabra secreta y su rol => ")
+        input(f"Turno de {jugador}, pulse cualquier tecla para ver la palabra secreta y su rol => ")
         if jugador == nombre_impostor:
-            print(f"Role: 🔴 IMPOSTOR 🔴\n Pista: {diccionario_palabras[palabra_secreta]}")
-            input("Pulsa cualquiere tecla para pasarle al siguiente participante y ocultar tu rol y palabra => ")
-            print("\n"*100)
+            print(f"Rol: 🔴 IMPOSTOR 🔴\nPista: {diccionario_palabras[palabra_secreta]}")
+            input("Pulsa cualquier tecla para pasarle al siguiente participante y ocultar tu rol y palabra => ")
+            print("\n" * 100)
         else:
-            print(f"Role: Inocente \n Palabra: 🔒{palabra_secreta}🔒")
-            input("Pulsa cualquiere tecla para pasarle al siguiente participante y ocultar tu rol y palabra=> ")
+            print(f"Rol: Inocente \nPalabra: 🔒{palabra_secreta}🔒")
+            input("Pulsa cualquier tecla para pasarle al siguiente participante y ocultar tu rol y palabra => ")
             print("\n" * 100)
 
 
 # Función encargada de gestionar las rondas
-
 def generador_rondas():
     for i in range(numero_rondas):
-        print(f"============= Ronda {i+1} =============")
+        print(f"============= Ronda {i + 1} =============")
         for jugador in lista_jugadores:
-            respuesta= validar_datos("FN_generador_ronda",jugador)
+            respuesta = validar_datos("FN_generador_ronda", jugador)
             diccionario_respuestas[jugador].append(respuesta)
 
 
 # Función encargada de gestionar las votaciones
-
 def gestion_votacion():
     print("\n" * 100)
     print("============= HORA DE VOTAR =============")
@@ -102,23 +100,24 @@ def gestion_votacion():
         for respuesta in diccionario_respuestas[jugadores_respuestas]:
             print(f"- {respuesta}")
 
-
     for jugador in lista_jugadores:
-        voto_jugador = validar_datos("FN_gestion_votacion",jugador)
-        diccionario_votos[voto_jugador]=diccionario_votos.get(voto_jugador,0)+1
+        voto_jugador = validar_datos("FN_gestion_votacion", jugador)
+        diccionario_votos[voto_jugador] = diccionario_votos.get(voto_jugador, 0) + 1
 
 
-# Funcion encargada de mostrar el resultado
-
+# Función encargada de mostrar el resultado
 def mostrar_resultado():
     max_votos = max(diccionario_votos.values())
     lista_ganadores = [jugador for jugador, votos in diccionario_votos.items() if votos == max_votos]
+
     print("=== Lista de votos a cada jugador ===")
     for jugador in diccionario_votos:
         print(f"{jugador}: {diccionario_votos[jugador]} ")
+
     print("\n" + "*" * 40)
-    if len(lista_ganadores) > 1 and (nombre_impostor in lista_ganadores)  :
-        print(f"EMPATE EN LA VOTACION")
+
+    if len(lista_ganadores) > 1 and (nombre_impostor in lista_ganadores):
+        print(f"EMPATE EN LA VOTACIÓN")
         print(f"El impostor era {nombre_impostor}")
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
@@ -128,18 +127,16 @@ def mostrar_resultado():
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
     else:
-        print(f"GANA LOS INOCENTES")
+        print(f"GANAN LOS INOCENTES")
         print(f"El impostor era {nombre_impostor}")
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
-print("*" * 40 + "\n")
+
+    print("*" * 40 + "\n")
 
 
-
-
-
-# Funcion que es llamada por diferentes funciones para comprobar algún tipo de entrada
-def validar_datos(tipo_a_validar,jugador="None"):
+# Función para validar las entradas
+def validar_datos(tipo_a_validar, jugador="None"):
     match tipo_a_validar:
 
         case "FN_solicitar_datos":
@@ -152,21 +149,22 @@ def validar_datos(tipo_a_validar,jugador="None"):
             return numero_participantes
 
         case "FN_generador_ronda":
-                jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda => ")
-                while len(jugador_respuesta)<2:
-                    jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda debe ser almenos de 2 letras => ")
+            jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda => ")
+            while len(jugador_respuesta) < 2:
+                jugador_respuesta = input(
+                    f"\n{jugador.upper()} escribe tu respuesta (debe tener al menos 2 letras) => ")
 
-                return jugador_respuesta
+            return jugador_respuesta
+
         case "FN_gestion_votacion":
-              votacion = input(f"{jugador} escribe el nombre de la persona a la que votas => ").strip().capitalize()
-              while (votacion not in lista_jugadores ) or votacion == jugador :
-                  print("============= Nombre invalido  ============= ")
-                  votacion= input(f"{jugador} escribe el nombre de la persona a la que votas => ").strip().capitalize()
-              return votacion
+            votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
+            while (votacion not in lista_jugadores) or votacion == jugador:
+                print("============= Nombre inválido ============= ")
+                votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
+            return votacion
 
         case _:
             return None
-
 
 
 # --- INICIO DEL JUEGO ---
@@ -176,4 +174,3 @@ mostrar_palabra()
 generador_rondas()
 gestion_votacion()
 mostrar_resultado()
-
