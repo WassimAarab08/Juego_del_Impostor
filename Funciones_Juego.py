@@ -41,11 +41,11 @@ def solicitar_datos():
     numero_participantes = validar_datos("FN_solicitar_datos")
 
     for i in range(numero_participantes):
-        nombre_jugador = input(f"Jugador número {i + 1}, introduzca su nombre por favor => ")
+        nombre_jugador = input(f"Jugador número {i + 1}, introduzca su nombre por favor => ").strip().capitalize()
 
         while True:
             if nombre_jugador in lista_jugadores:
-                nombre_jugador = input("Ese nombre ya está en uso, pruebe con otro => ")
+                nombre_jugador = input("Ese nombre ya está en uso, pruebe con otro => ").strip().capitalize()
             else:
                 break
 
@@ -90,7 +90,21 @@ def generador_rondas():
             diccionario_respuestas[jugador].append(respuesta)
 
 
+# Función encargada de gestionar las votaciones
 
+def gestion_votacion():
+    print("============= HORA DE VOTAR =============")
+
+    for jugadores_respuestas in lista_jugadores:
+        print(f"🔵 Respuestas de {jugadores_respuestas} 🔵")
+
+        for respuesta in diccionario_respuestas[jugadores_respuestas]:
+            print(f"- {respuesta}")
+
+
+    for jugador in lista_jugadores:
+        voto_jugador = validar_datos("FN_gestion_votacion",jugador)
+        diccionario_votos[voto_jugador]=diccionario_votos.get(voto_jugador,0)+1
 
 
 
@@ -122,12 +136,19 @@ def validar_datos(tipo_a_validar,jugador="None"):
                 except ValueError:
                     print("Entrada no válida, ya que no es un número.")
             return numero_participantes
+
         case "FN_generador_ronda":
                 jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda => ")
                 while len(jugador_respuesta)<2:
                     jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda debe ser almenos de 2 letras => ")
 
                 return jugador_respuesta
+        case "FN_gestion_votacion":
+              votacion = input(f"{jugador} escribe el nombre de la persona a la que votas => ").strip().capitalize()
+              while votacion not in lista_jugadores:
+                  print("============= Nombre invalido ============= ")
+                  votacion= input(f"{jugador} escribe el nombre de la persona a la que votas => ").strip().capitalize()
+              return votacion
 
         case _:
             return None
