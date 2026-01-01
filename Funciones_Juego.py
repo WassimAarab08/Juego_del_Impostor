@@ -50,10 +50,13 @@ def mostrar_palabra(lista_jugadores, nombre_impostor, diccionario_palabras, pala
 
 # Función encargada de gestionar las rondas
 def generador_rondas(diccionario_respuestas, numero_rondas, lista_jugadores):
+
+    resultado_temp=[]
     for i in range(numero_rondas):
         print(f"\n============= Ronda {i + 1} =============")
         for jugador in lista_jugadores:
-            respuesta = validar_datos("FN_generador_ronda", jugador)
+            respuesta = validar_datos("FN_generador_ronda", jugador,resultado_temp)
+            resultado_temp.append(respuesta)
             diccionario_respuestas[jugador].append(respuesta)
 
 
@@ -104,7 +107,7 @@ def mostrar_resultado(diccionario_votos, nombre_impostor, palabra_secreta, dicci
 
 
 # Función para validar las entradas
-def validar_datos(tipo_a_validar, jugador="None", lista_jugadores=None):
+def validar_datos(tipo_a_validar, jugador="None", lista=None):
     match tipo_a_validar:
 
         case "FN_solicitar_datos":
@@ -118,15 +121,15 @@ def validar_datos(tipo_a_validar, jugador="None", lista_jugadores=None):
 
         case "FN_generador_ronda":
             jugador_respuesta = input(f"\n{jugador.upper()} escribe tu respuesta para esta ronda => ")
-            while len(jugador_respuesta) < 2:
+            while len(jugador_respuesta) < 2 or jugador_respuesta in lista:
                 jugador_respuesta = input(
-                    f"\n{jugador.upper()} escribe tu respuesta (debe tener al menos 2 letras) => ")
+                    f"\n{jugador.upper()} escribe tu respuesta (⚠️Debe tener al menos 2 letras y no repetirse.⚠️) => ")
 
             return jugador_respuesta
 
         case "FN_gestion_votacion":
             votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
-            while (votacion not in lista_jugadores) or votacion == jugador:
+            while (votacion not in lista) or votacion == jugador:
                 print("============= Nombre inválido ============= ")
                 votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
             return votacion
