@@ -51,7 +51,7 @@ def mostrar_palabra(lista_jugadores, nombre_impostor, diccionario_palabras, pala
 # Función encargada de gestionar las rondas
 def generador_rondas(diccionario_respuestas, numero_rondas, lista_jugadores):
     for i in range(numero_rondas):
-        print(f"============= Ronda {i + 1} =============")
+        print(f"\n============= Ronda {i + 1} =============")
         for jugador in lista_jugadores:
             respuesta = validar_datos("FN_generador_ronda", jugador)
             diccionario_respuestas[jugador].append(respuesta)
