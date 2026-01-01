@@ -130,8 +130,8 @@ def validar_datos(tipo_a_validar, jugador="None", lista=None):
         case "FN_gestion_votacion":
             votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
             while (votacion not in lista) or votacion == jugador:
-                print("============= Nombre inválido ============= ")
-                votacion = input(f"{jugador}, escribe el nombre de la persona a la que votas => ").strip().capitalize()
+                print("Error Nombre inválido o intento de auto-voto.")
+                votacion = input("Introduce un nombre válido => ").strip().capitalize()
             return votacion
 
         case _:
