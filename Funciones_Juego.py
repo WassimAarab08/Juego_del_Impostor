@@ -88,17 +88,17 @@ def mostrar_resultado(diccionario_votos, nombre_impostor, palabra_secreta, dicci
     print("\n" + "*" * 40)
 
     if len(lista_ganadores) > 1 and (nombre_impostor in lista_ganadores):
-        print("EMPATE EN LA VOTACIÓN")
+        print("⚖️ EMPATE EN LA VOTACIÓN ⚖️")
         print(f"El impostor era {nombre_impostor}")
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
     elif nombre_impostor not in lista_ganadores:
-        print("GANA EL IMPOSTOR")
+        print("🔪 GANA EL IMPOSTOR 🔪")
         print(f"El impostor era {nombre_impostor}")
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
     else:
-        print("GANAN LOS INOCENTES")
+        print("💚 GANAN LOS INOCENTES 💚")
         print(f"El impostor era {nombre_impostor}")
         print(f"La palabra secreta era {palabra_secreta}")
         print(f"La pista era {diccionario_palabras[palabra_secreta]}")
@@ -116,7 +116,7 @@ def validar_datos(tipo_a_validar, jugador="None", lista=None):
                 try:
                     numero_participantes = int(input("Introduzca el número de participantes (mínimo 3) => "))
                 except ValueError:
-                    print("Entrada no válida, ya que no es un número.")
+                    print("⚠️ Entrada no válida, ya que no es un número. ⚠️")
             return numero_participantes
 
         case "FN_generador_ronda":
@@ -138,7 +138,7 @@ def validar_datos(tipo_a_validar, jugador="None", lista=None):
             return None
 
 
-# --- INICIO DEL JUEGO ---
+# Función de incio de juego
 
 def controlador_juego():
     lista_jugadores, diccionario_respuestas, diccionario_votos = solicitar_datos()
@@ -147,7 +147,7 @@ def controlador_juego():
         "León": "Tigre",
         "Avión": "Helicóptero",
         "Invierno": "Nieve",
-        "Médico": "Enfermero",
+        "Médico": "Fiebre",
         "Desierto": "Oasis",
         "Reloj": "Cronómetro",
         "Oro": "Plata",

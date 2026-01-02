@@ -1,4 +1,5 @@
 from Funciones_Juego import controlador_juego
+
 if __name__ == "__main__":
     while True:
         controlador_juego()
