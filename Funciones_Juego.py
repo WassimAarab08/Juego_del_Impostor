@@ -81,7 +81,7 @@ def mostrar_resultado(diccionario_votos, nombre_impostor, palabra_secreta, dicci
     max_votos = max(diccionario_votos.values())
     lista_ganadores = [jugador for jugador, votos in diccionario_votos.items() if votos == max_votos]
     print("\n" * 3)
-    print("=== Lista de votos de cada jugador ===")
+    print("======= Lista de votos de cada jugador ======= ")
     for jugador in diccionario_votos:
         print(f"{jugador}: {diccionario_votos[jugador]} ")
 
